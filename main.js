@@ -25,6 +25,18 @@ const articles = [{
     },
 ];
 
+app.get("/articles/search_2", (req, res, next) => {
+    const articleId = JSON.parse(req.query.id);
+    console.log(articleId)
+    const byId = articles.filter((element) => {
+        // console.log("element.id=", element.id)
+        // console.log("articleId=", articleId)
+        return element.id === articleId;
+    });
+    res.status = 200;
+    res.json(byId);
+});
+
 app.get("/articles/search_1", (req, res, next) => {
     const authorName = req.query.author;
 
