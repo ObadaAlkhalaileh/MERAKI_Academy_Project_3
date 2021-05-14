@@ -80,17 +80,16 @@ app.put("/articles/:id", (req, res, next) => {
     const articleId = JSON.parse(req.params.id);
 
     let i;
-    let found = articles.find((element, index) => {
+    const found = articles.find((element, index) => {
         i = index;
         return element.id === articleId;
     });
 
-    found = {
-        id: articleId,
-        title: req.body.title,
-        description: req.body.description,
-        author: req.body.author
+    for (const key in req.body) {
+        found[key] = req.body[key];
     };
+
+    found.id = articleId;
 
     articles.splice(i, 1, found);
 
