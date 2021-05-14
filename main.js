@@ -26,6 +26,31 @@ const articles = [{
     },
 ];
 
+app.delete("/articles", (req, res, next) => {
+    const articleAuthor = req.body.author;
+
+    const sortedByAuthor = [];
+    articles.forEach((element, index) => {
+        if (element.author === articleAuthor) {
+            articles.splice(index, 1);
+            sortedByAuthor.push(element);
+        }
+    });
+    if (sortedByAuthor[0]) {
+        res.status = 200;
+        res.json({
+            success: true,
+            message: `Success delete all the articles for the author => ${articleAuthor}`
+        });
+    } else {
+        res.status = 404;
+        res.json({
+            success: false,
+            message: `Please enter a valid author name`
+        });
+    };
+});
+
 app.delete("/articles/:id", (req, res, next) => {
     const articleId = JSON.parse(req.params.id);
 
