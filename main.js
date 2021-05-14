@@ -1,4 +1,5 @@
 const express = require("express");
+const { uuid } = require('uuidv4');
 
 const app = express();
 const PORT = 5000;
@@ -24,6 +25,20 @@ const articles = [{
         author: 'Jouza',
     },
 ];
+
+app.post("/articles", (req, res, next) => {
+    const newArticle = {
+        title: req.body.title,
+        description: req.body.description,
+        author: req.body.author
+    };
+    newArticle.id = uuid()
+
+    articles.push(newArticle);
+
+    res.status = 201;
+    res.json(newArticle);
+});
 
 app.get("/articles/search_2", (req, res, next) => {
     const articleId = JSON.parse(req.query.id);
