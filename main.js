@@ -26,13 +26,35 @@ const articles = [{
     },
 ];
 
+app.put("/articles/:id", (req, res, next) => {
+    const articleId = JSON.parse(req.params.id);
+
+    let i;
+    let found = articles.find((element, index) => {
+        i = index;
+        return element.id === articleId;
+    });
+
+    found = {
+        id: articleId,
+        title: req.body.title,
+        description: req.body.description,
+        author: req.body.author
+    };
+
+    articles.splice(i, 1, found);
+
+    res.status = 200;
+    res.json(found);
+});
+
 app.post("/articles", (req, res, next) => {
     const newArticle = {
         title: req.body.title,
         description: req.body.description,
         author: req.body.author
     };
-    newArticle.id = uuid()
+    newArticle.id = uuid();
 
     articles.push(newArticle);
 
