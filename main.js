@@ -26,6 +26,7 @@ const articles = [{
     },
 ];
 
+//7. deleteArticlesByAuthor
 app.delete("/articles", (req, res, next) => {
     const articleAuthor = req.body.author;
 
@@ -51,6 +52,7 @@ app.delete("/articles", (req, res, next) => {
     };
 });
 
+//6. deleteAnArticleById
 app.delete("/articles/:id", (req, res, next) => {
     const articleId = JSON.parse(req.params.id);
 
@@ -73,9 +75,10 @@ app.delete("/articles/:id", (req, res, next) => {
             success: false,
             message: `Please enter a valid article id --> from (1 to ${articles.length})`
         });
-    }
+    };
 });
 
+//5. updateAnArticleById
 app.put("/articles/:id", (req, res, next) => {
     const articleId = JSON.parse(req.params.id);
 
@@ -97,6 +100,7 @@ app.put("/articles/:id", (req, res, next) => {
     res.json(found);
 });
 
+//4. createNewArticle
 app.post("/articles", (req, res, next) => {
     const newArticle = {
         title: req.body.title,
@@ -111,6 +115,7 @@ app.post("/articles", (req, res, next) => {
     res.json(newArticle);
 });
 
+//3. getAnArticleById
 app.get("/articles/search_2", (req, res, next) => {
     const articleId = JSON.parse(req.query.id);
     console.log(articleId)
@@ -123,6 +128,7 @@ app.get("/articles/search_2", (req, res, next) => {
     res.json(byId);
 });
 
+//2. getArticlesByAuthor
 app.get("/articles/search_1", (req, res, next) => {
     const authorName = req.query.author;
 
@@ -133,6 +139,7 @@ app.get("/articles/search_1", (req, res, next) => {
     res.json(byAuthor);
 });
 
+//1. getAllArticles
 app.get("/articles", (req, res, next) => {
     res.status = 200;
     res.json(articles);
