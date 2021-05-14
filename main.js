@@ -26,6 +26,31 @@ const articles = [{
     },
 ];
 
+app.delete("/articles/:id", (req, res, next) => {
+    const articleId = JSON.parse(req.params.id);
+
+    if (articleId < articles.length) {
+        let i;
+        let found = articles.find((element, index) => {
+            i = index;
+            return element.id === articleId;
+        });
+        articles.splice(i, 1);
+
+        res.status = 200;
+        res.json({
+            success: true,
+            message: `Success Delete article with id => ${articleId}`
+        });
+    } else {
+        res.status = 404;
+        res.json({
+            success: false,
+            message: `Please enter a valid article id --> from (1 to ${articles.length})`
+        });
+    }
+});
+
 app.put("/articles/:id", (req, res, next) => {
     const articleId = JSON.parse(req.params.id);
 
