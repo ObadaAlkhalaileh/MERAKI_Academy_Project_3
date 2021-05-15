@@ -27,7 +27,7 @@ const articles = [{
 ];
 
 //7. deleteArticlesByAuthor
-app.delete("/articles", (req, res, next) => {
+const deleteArticlesByAuthor = (req, res, next) => {
     const articleAuthor = req.body.author;
 
     const sortedByAuthor = [];
@@ -50,10 +50,12 @@ app.delete("/articles", (req, res, next) => {
             message: `Please enter a valid author name`
         });
     };
-});
+};
+app.delete("/articles", deleteArticlesByAuthor);
+
 
 //6. deleteAnArticleById
-app.delete("/articles/:id", (req, res, next) => {
+const deleteAnArticleById = (req, res, next) => {
     const articleId = JSON.parse(req.params.id);
 
     if (articleId < articles.length) {
@@ -76,10 +78,12 @@ app.delete("/articles/:id", (req, res, next) => {
             message: `Please enter a valid article id --> from (1 to ${articles.length})`
         });
     };
-});
+};
+app.delete("/articles/:id", deleteAnArticleById);
+
 
 //5. updateAnArticleById
-app.put("/articles/:id", (req, res, next) => {
+const updateAnArticleById = (req, res, next) => {
     const articleId = JSON.parse(req.params.id);
 
     let i;
@@ -98,10 +102,12 @@ app.put("/articles/:id", (req, res, next) => {
 
     res.status = 200;
     res.json(found);
-});
+};
+app.put("/articles/:id", updateAnArticleById);
+
 
 //4. createNewArticle
-app.post("/articles", (req, res, next) => {
+const createNewArticle = (req, res, next) => {
     const newArticle = {
         title: req.body.title,
         description: req.body.description,
@@ -113,10 +119,12 @@ app.post("/articles", (req, res, next) => {
 
     res.status = 201;
     res.json(newArticle);
-});
+};
+app.post("/articles", createNewArticle);
+
 
 //3. getAnArticleById
-app.get("/articles/search_2", (req, res, next) => {
+const getAnArticleById = (req, res, next) => {
     const articleId = JSON.parse(req.query.id);
     console.log(articleId)
     const byId = articles.filter((element) => {
@@ -126,10 +134,12 @@ app.get("/articles/search_2", (req, res, next) => {
     });
     res.status = 200;
     res.json(byId);
-});
+};
+app.get("/articles/search_2", getAnArticleById);
+
 
 //2. getArticlesByAuthor
-app.get("/articles/search_1", (req, res, next) => {
+const getArticlesByAuthor = (req, res, next) => {
     const authorName = req.query.author;
 
     const byAuthor = articles.filter((element) => {
@@ -137,13 +147,17 @@ app.get("/articles/search_1", (req, res, next) => {
     });
     res.status = 200;
     res.json(byAuthor);
-});
+};
+app.get("/articles/search_1", getArticlesByAuthor);
+
 
 //1. getAllArticles
-app.get("/articles", (req, res, next) => {
+const getAllArticles = (req, res, next) => {
     res.status = 200;
     res.json(articles);
-});
+};
+app.get("/articles", getAllArticles);
+
 
 app.listen(PORT, () => {
     console.log(`Example app listening at http://localhost:${PORT}`);
