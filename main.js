@@ -1,6 +1,11 @@
 const express = require("express");
 const { uuid } = require('uuidv4');
 
+//database requirement
+const db = require("./db");
+//model requirement
+const { User, Article } = require("./schema"); // User and Article can be changed to anything
+
 const app = express();
 const PORT = 5000;
 
