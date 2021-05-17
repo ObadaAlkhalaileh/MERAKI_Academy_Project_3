@@ -31,6 +31,27 @@ const articles = [{
     },
 ];
 
+// 1. createNewAuthor
+const createNewAuthor = (req, res, next) => {
+    // require data from request
+    const { firstName, lastName, age, country, email, password } = req.body;
+    // creat instance of User model
+    const newAuthor = new User({ firstName, lastName, age, country, email, password });
+
+    newAuthor
+        .save()
+        .then((result1) => {
+            res.status = 201;
+            res.json(result1);
+            next();
+        })
+        .catch((err1) => {
+            res.json(err1);
+        });
+};
+app.post("/users", createNewAuthor);
+
+
 //7. deleteArticlesByAuthor
 const deleteArticlesByAuthor = (req, res, next) => {
     const articleAuthor = req.body.author;
