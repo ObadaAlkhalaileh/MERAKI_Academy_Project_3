@@ -179,13 +179,22 @@ app.get("/articles/search_2", getAnArticleById);
 
 //2. getArticlesByAuthor
 const getArticlesByAuthor = (req, res, next) => {
-    const authorName = req.query.author;
+    const authorId = req.query.authorId;
+    //search_1?authorId=60a2d3633d768c67281e7c74 to postman
+    Article.find({ author: authorId })
+        .then((result) => {
+            res.status(200)
+            res.json(result);
+        })
+        .catch((err) => {
+            res.json(err);
+        });
 
-    const byAuthor = articles.filter((element) => {
-        return element.author === authorName;
-    });
-    res.status = 200;
-    res.json(byAuthor);
+    // const byAuthor = articles.filter((element) => {
+    //     return element.author === authorName;
+    // });
+    // res.status(200);
+    // res.json(byAuthor);
 };
 app.get("/articles/search_1", getArticlesByAuthor);
 
