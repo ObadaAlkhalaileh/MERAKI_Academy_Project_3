@@ -192,8 +192,17 @@ app.get("/articles/search_1", getArticlesByAuthor);
 
 //1. getAllArticles
 const getAllArticles = (req, res, next) => {
-    res.status = 200;
-    res.json(articles);
+
+    Article.find({})
+        .then((result) => {
+            res.status(200);
+            res.json(result);
+        })
+        .catch((err) => {
+            res.json(err);
+        });
+    // res.status (200);
+    // res.json(articles);
 };
 app.get("/articles", getAllArticles);
 
