@@ -17,7 +17,7 @@ const articles = new mongoose.Schema({
 
 //create model {object}
 const User1 = mongoose.model("User", users); //User(s) is the name in DB
-const Article1 = mongoose.model("Article", users);
+const Article1 = mongoose.model("Article", articles);
 
 //Export model
 module.exports.User = User1; // "User" in 19 line has nothing to do with User here

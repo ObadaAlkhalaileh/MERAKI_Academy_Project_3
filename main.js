@@ -30,7 +30,7 @@ const articles = [{
         author: 'Jouza',
     },
 ];
-
+//PART II
 // 1. createNewAuthor
 const createNewAuthor = (req, res, next) => {
     // require data from request
@@ -41,7 +41,7 @@ const createNewAuthor = (req, res, next) => {
     newAuthor
         .save()
         .then((result1) => {
-            res.status = 201;
+            res.status(201);
             res.json(result1);
             next();
         })
@@ -134,17 +134,30 @@ app.put("/articles/:id", updateAnArticleById);
 
 //4. createNewArticle
 const createNewArticle = (req, res, next) => {
-    const newArticle = {
-        title: req.body.title,
-        description: req.body.description,
-        author: req.body.author
-    };
+    // const newArticle = {
+    //     title: req.body.title,
+    //     description: req.body.description,
+    //     author: req.body.author
+    // };
+
+    const { title, description, author } = req.body;
+    const newArticle = new Article({ title, description, author });
+
     newArticle.id = uuid();
 
-    articles.push(newArticle);
+    // articles.push(newArticle);
+    newArticle
+        .save()
+        .then((result1) => {
+            res.status(201);
+            res.json(result1);
+        })
+        .catch((err) => {
+            res.json(err);
+        })
 
-    res.status = 201;
-    res.json(newArticle);
+    // res.status = 201;
+    // res.json(newArticle);
 };
 app.post("/articles", createNewArticle);
 
