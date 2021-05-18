@@ -34,6 +34,31 @@ app.use(express.json());
 //PART II
 
 
+//B.2. login (Level 1)
+const login = (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    User.findOne({ email, password })
+        .then((result) => {
+            if (result) {
+                res.status(200)
+                res.json("Valid login credentials")
+            } else {
+                res.status(404)
+                res.json("Invalid login credentials")
+            }
+        })
+
+    // User.validate({ email: email }, ['email'])
+    //     .then((result1) => { res.send("found") })
+    //     .catch((err) => { res.send("not found") })
+    // err instanceof mongoose.Error.ValidationError; // true
+    // Object.keys(err.errors); // ['name']
+
+
+};
+app.post("/login", login);
 
 
 // 1. createNewAuthor
