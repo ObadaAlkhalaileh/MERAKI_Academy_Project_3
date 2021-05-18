@@ -115,24 +115,83 @@ app.delete("/articles/:id", deleteAnArticleById);
 
 //5. updateAnArticleById
 const updateAnArticleById = (req, res, next) => {
-    const articleId = JSON.parse(req.params.id);
+    // const articleId = JSON.parse(req.params.id);
+    const articleId = req.params.id;
 
-    let i;
-    const found = articles.find((element, index) => {
-        i = index;
-        return element.id === articleId;
-    });
+    // let i;
+    // const found = articles.find((element, index) => {
+    //     i = index;
+    //     return element.id === articleId;
+    // });
 
-    for (const key in req.body) {
-        found[key] = req.body[key];
+    //there is another method of using updateOne 3 times 
+
+    if (req.body.title) {
+        Article.updateOne({ _id: articleId }, { title: req.body.title }, (err, res) => {
+            if (err) { res.send(err) };
+        });
+    };
+    if (req.body.description) {
+        Article.updateOne({ _id: articleId }, { description: req.body.description }, (err, res) => {
+            if (err) { res.send(err) };
+        });
+    };
+    if (req.body.author) {
+        Article.updateOne({ _id: articleId }, { author: req.body.author }, (err, res) => {
+            if (err) { res.send(err) };
+        });
     };
 
-    found.id = articleId;
+    Article.find({ _id: articleId })
+        .then((result) => {
+            res.status(200)
+            res.json(result);
+        })
+        .catch((err) => {
+            res.json(err);
+        });
 
-    articles.splice(i, 1, found);
+    /*shortcut way -_-
+Article.findOneAndUpdate({_id:id}, req.body ,{new:true})
+.then((result)=>{
+    res.json(result)
+})
+.catch((err)=>{
+    res.json(err)
+})
+        */
 
-    res.status = 200;
-    res.json(found);
+    //-----------------this way didnt work because model instances cant be modified like normal objects
+    /*Article.find({ _id: articleId })
+        // .exec()
+        .then(() => {
+            const temp = {};
+            // const result =new Article()
+            for (const key in req.body) {
+                temp[key] = req.body[key];
+            };
+            // console.log(result);
+            const updated = new Article({ title: temp.title })
+                // hey.name="ahmad" this way doesnt work!!! this is not normal object
+
+            res.status(200)
+            res.json(updated);
+        })
+        .catch((err) => {
+            res.json(err);
+        });*/
+    //------------
+
+    // for (const key in req.body) {
+    //     found[key] = req.body[key];
+    // };
+
+    // found.id = articleId;
+
+    // articles.splice(i, 1, found);
+
+    // res.status = 200;
+    // res.json(found);
 };
 app.put("/articles/:id", updateAnArticleById);
 
@@ -173,11 +232,11 @@ app.post("/articles", createNewArticle);
 //3. getAnArticleById
 const getAnArticleById = (req, res, next) => {
     const articleId = req.query.id;
-    console.log(articleId);
+    // console.log(articleId);
 
     Article.find({ _id: articleId }).populate("author", "firstName")
+        // .exec()
         .then((result) => {
-            console.log(articleId);
             res.status(200)
             res.json(result);
         })
