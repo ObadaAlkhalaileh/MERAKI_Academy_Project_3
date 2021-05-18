@@ -18,8 +18,7 @@ const articles = new mongoose.Schema({
 
 const comments = new mongoose.Schema({
     comment: String,
-    commenter: mongoose.Schema.ObjectId,
-    description: String
+    commenter: mongoose.Schema.ObjectId
 });
 
 //create model {object}
