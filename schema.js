@@ -13,6 +13,13 @@ const articles = new mongoose.Schema({
     title: { type: String, required: true },
     description: String,
     author: { type: mongoose.Schema.ObjectId, ref: "User" },
+    comments: [{ type: String }]
+});
+
+const comments = new mongoose.Schema({
+    comment: String,
+    commenter: mongoose.Schema.ObjectId,
+    description: String
 });
 
 //create model {object}
