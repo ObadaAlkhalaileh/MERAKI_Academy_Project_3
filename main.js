@@ -33,6 +33,28 @@ app.use(express.json());
 // ];
 //PART II
 
+//B.3. createNewComment
+const createNewComment = (req, res, next) => {
+    const articleId = req.params.id;
+
+    const { comment, commenter } = req.body;
+    newComment = new Comment({ comment, commenter });
+
+    newComment.save()
+        .then((result1) => {
+            res.status(201);
+            res.json(result1);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.json(err);
+        });
+    console.log(newComment._id)
+        // // Article.updateOne({ _id: articleId }, { comment: newComment._id }, (err, res) => {
+        // //     if (err) { res.send(err) };
+        // });
+};
+app.post("/articles/:id/comments", createNewComment);
 
 //B.2. login (Level 1)
 const login = (req, res, next) => {
