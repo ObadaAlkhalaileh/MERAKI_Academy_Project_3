@@ -10,7 +10,7 @@ const users = new mongoose.Schema({
 });
 
 const articles = new mongoose.Schema({
-    title: String,
+    title: { type: String, required: true },
     description: String,
     author: { type: mongoose.Schema.ObjectId, ref: "User" },
 });
@@ -24,3 +24,5 @@ module.exports.User = User1; // "User" in 19 line has nothing to do with User he
 module.exports.Article = Article1; // "Article" in 20 line has nothing to do with User here
 
 //key and value for (module.exports) object
+
+// console.log(module.exports);

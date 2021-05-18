@@ -1,36 +1,41 @@
 const express = require("express");
-const { uuid } = require('uuidv4');
+// const { uuid } = require('uuidv4');
 
 //database requirement
 const db = require("./db");
 //model requirement
 const { User, Article } = require("./schema"); // User and Article can be changed to anything
+// console.log("Article=", Article);
 
 const app = express();
 const PORT = 5000;
 
 app.use(express.json());
 
-const articles = [{
-        id: 1,
-        title: 'How I learn coding?',
-        description: 'Lorem, Quam, mollitia.',
-        author: 'Jouza',
-    },
-    {
-        id: 2,
-        title: 'Coding Best Practices',
-        description: 'Lorem, ipsum dolor sit, Quam, mollitia.',
-        author: 'Besslan',
-    },
-    {
-        id: 3,
-        title: 'Debugging',
-        description: 'Lorem, Quam, mollitia.',
-        author: 'Jouza',
-    },
-];
+// const articles = [{
+//         id: 1,
+//         title: 'How I learn coding?',
+//         description: 'Lorem, Quam, mollitia.',
+//         author: 'Jouza',
+//     },
+//     {
+//         id: 2,
+//         title: 'Coding Best Practices',
+//         description: 'Lorem, ipsum dolor sit, Quam, mollitia.',
+//         author: 'Besslan',
+//     },
+//     {
+//         id: 3,
+//         title: 'Debugging',
+//         description: 'Lorem, Quam, mollitia.',
+//         author: 'Jouza',
+//     },
+// ];
 //PART II
+
+
+
+
 // 1. createNewAuthor
 const createNewAuthor = (req, res, next) => {
     // require data from request
@@ -143,18 +148,21 @@ const createNewArticle = (req, res, next) => {
     const { title, description, author } = req.body;
     const newArticle = new Article({ title, description, author });
 
-    newArticle.id = uuid();
+    // console.log(newArticle);
+    // newArticle.id = uuid();
 
     // articles.push(newArticle);
     newArticle
         .save()
         .then((result1) => {
+            // console.log("result1", result1)
             res.status(201);
             res.json(result1);
         })
         .catch((err) => {
+            console.log(err);
             res.json(err);
-        })
+        });
 
     // res.status = 201;
     // res.json(newArticle);
@@ -165,14 +173,22 @@ app.post("/articles", createNewArticle);
 //3. getAnArticleById
 const getAnArticleById = (req, res, next) => {
     const articleId = JSON.parse(req.query.id);
-    console.log(articleId)
-    const byId = articles.filter((element) => {
-        // console.log("element.id=", element.id)
-        // console.log("articleId=", articleId)
-        return element.id === articleId;
-    });
-    res.status = 200;
-    res.json(byId);
+
+    Article.find({ id: articleId })
+        .then((result) => {
+            res.status(200)
+            res.json(result);
+        })
+        .catch((err) => {
+            res.json(err);
+        });
+    // const byId = articles.filter((element) => {
+    //     // console.log("element.id=", element.id)
+    //     // console.log("articleId=", articleId)
+    //     return element.id === articleId;
+    // });
+    // res.status = 200;
+    // res.json(byId);
 };
 app.get("/articles/search_2", getAnArticleById);
 
