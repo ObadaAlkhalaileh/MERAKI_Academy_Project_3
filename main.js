@@ -58,29 +58,57 @@ app.post("/users", createNewAuthor);
 
 
 //7. deleteArticlesByAuthor
-const deleteArticlesByAuthor = (req, res, next) => {
-    const articleAuthor = req.body.author;
+const deleteArticlesByAuthor = async(req, res, next) => {
+    const articleAuthor = req.body.firstName;
+    // const authorId = req.body.author;
 
-    const sortedByAuthor = [];
-    articles.forEach((element, index) => {
-        if (element.author === articleAuthor) {
-            articles.splice(index, 1);
-            sortedByAuthor.push(element);
-        }
+    const authorId = await User.find({ firstName: articleAuthor }).then((result) => {
+            console.log(typeof(result[0]._id));
+            return result[0]._id
+        })
+        .catch((err) => {
+            res.json(err);
+        });
+
+    // console.log(authorId);
+    Article.deleteMany({ author: authorId }, (err, resp) => {
+        if (err) {
+            res.status = 404;
+            res.json({
+                success: false,
+                message: `Please enter a valid author name`
+            });
+        };
+        if (resp) { //kept waiting in postman without this condition
+            res.status(200);
+            res.send({
+                success: true,
+                message: `Success delete all the articles for the author => ${articleAuthor}`
+            });
+        };
     });
-    if (sortedByAuthor[0]) {
-        res.status = 200;
-        res.json({
-            success: true,
-            message: `Success delete all the articles for the author => ${articleAuthor}`
+    /*
+        const sortedByAuthor = [];
+        articles.forEach((element, index) => {
+            if (element.author === articleAuthor) {
+                articles.splice(index, 1);
+                sortedByAuthor.push(element);
+            }
         });
-    } else {
-        res.status = 404;
-        res.json({
-            success: false,
-            message: `Please enter a valid author name`
-        });
-    };
+        if (sortedByAuthor[0]) {
+            res.status = 200;
+            res.json({
+                success: true,
+                message: `Success delete all the articles for the author => ${articleAuthor}`
+            });
+        } else {
+            res.status = 404;
+            res.json({
+                success: false,
+                message: `Please enter a valid author name`
+            });
+        };
+        */
 };
 app.delete("/articles", deleteArticlesByAuthor);
 
