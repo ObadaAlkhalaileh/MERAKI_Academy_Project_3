@@ -175,7 +175,7 @@ const getAnArticleById = (req, res, next) => {
     const articleId = req.query.id;
     console.log(articleId);
 
-    Article.find({ _id: articleId })
+    Article.find({ _id: articleId }).populate("author", "firstName")
         .then((result) => {
             console.log(articleId);
             res.status(200)
