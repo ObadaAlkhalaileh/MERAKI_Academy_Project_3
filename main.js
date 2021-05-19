@@ -12,6 +12,8 @@ const PORT = 5000;
 
 app.use(express.json());
 
+require("dotenv").config();
+
 // const articles = [{
 //         id: 1,
 //         title: 'How I learn coding?',
