@@ -49,10 +49,10 @@ const createNewComment = (req, res, next) => {
             console.log(err);
             res.json(err);
         });
-    console.log(newComment._id)
-        // // Article.updateOne({ _id: articleId }, { comment: newComment._id }, (err, res) => {
-        // //     if (err) { res.send(err) };
-        // });
+    // console.log(typeof(newComment._id))
+    Article.updateOne({ _id: articleId }, { comments: newComment._id }, (err, res) => {
+        if (err) { res.send(err) };
+    });
 };
 app.post("/articles/:id/comments", createNewComment);
 
