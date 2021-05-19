@@ -14,6 +14,8 @@ app.use(express.json());
 
 require("dotenv").config();
 
+const bcrypt = require("bcrypt");
+
 // const articles = [{
 //         id: 1,
 //         title: 'How I learn coding?',
@@ -86,12 +88,16 @@ app.post("/login", login);
 
 
 // 1. createNewAuthor
-const createNewAuthor = (req, res, next) => {
+const createNewAuthor = async(req, res, next) => {
     // require data from request
     const { firstName, lastName, age, country, email, password } = req.body;
     // creat instance of User model
     const newAuthor = new User({ firstName, lastName, age, country, email, password });
-
+    const salt = 10
+    hashedPassword = await bcrypt.hash(password, salt, (err, hash) => {
+        // console.log(err);
+    })
+    console.log(hashedPassword);
     newAuthor
         .save()
         .then((result1) => {
