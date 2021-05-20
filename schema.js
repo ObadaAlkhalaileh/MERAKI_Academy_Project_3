@@ -8,7 +8,8 @@ const users = new mongoose.Schema({
     age: { type: Number, min: 0 },
     country: String,
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    role: { type: mongoose.Schema.ObjectId, ref: "Role" }
 });
 
 const articles = new mongoose.Schema({
