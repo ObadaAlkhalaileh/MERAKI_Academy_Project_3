@@ -14,7 +14,9 @@ app.use(express.json());
 
 require("dotenv").config();
 
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const { json } = require("express");
 
 // const articles = [{
 //         id: 1,
@@ -62,19 +64,42 @@ app.post("/articles/:id/comments", createNewComment);
 
 //B.2. login (Level 1)
 const login = (req, res, next) => {
-    const email = req.body.email;
+    const email = req.body.email.toLowerCase();
     const password = req.body.password;
 
-    User.findOne({ email, password })
+    User.findOne({ email })
         .then((result) => {
             if (result) {
-                res.status(200)
-                res.json("Valid login credentials")
+                //compare entered pass with hashed pass
+                bcrypt.compare(password, result.password, (err, result) => {
+                    if (result) {
+                        // sign a jwt (give token)
+
+                        res.status(200);
+                        // res.json("Success =>",{
+                        //     // token
+                        // });
+                    };
+
+                    if (err) {
+                        res.status(403);
+                        json.send("Error =>", {
+                            message: "The password you’ve entered is incorrect",
+                            status: 403
+                        });
+                    };
+                    console.log(result);
+                });
+
+
             } else {
-                res.status(404)
-                res.json("Invalid login credentials")
-            }
-        })
+                res.status(404);
+                res.json("Error =>", {
+                    message: "The email doesn't exist",
+                    status: 404
+                });
+            };
+        });
 
     // User.validate({ email: email }, ['email'])
     //     .then((result1) => { res.send("found") })
@@ -88,16 +113,12 @@ app.post("/login", login);
 
 
 // 1. createNewAuthor
-const createNewAuthor = async(req, res, next) => {
+const createNewAuthor = (req, res, next) => {
     // require data from request
     const { firstName, lastName, age, country, email, password } = req.body;
     // creat instance of User model
     const newAuthor = new User({ firstName, lastName, age, country, email, password });
-    const salt = 10
-    hashedPassword = await bcrypt.hash(password, salt, (err, hash) => {
-        // console.log(err);
-    })
-    console.log(hashedPassword);
+
     newAuthor
         .save()
         .then((result1) => {
