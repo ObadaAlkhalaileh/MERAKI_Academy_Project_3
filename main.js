@@ -29,9 +29,24 @@ const authentication = async(req, res, next) => {
     jwt.verify(TOKEN, SECRET, (err, result) => {
         if (err) { res.send(err) };
         req.token = TOKEN;
-        console.log(req.token)
+        // console.log(req.token)
         next();
     });
+};
+
+//5. createNewComment [Level 3]
+const authorization = (string) => {
+    return (req, res, next) => {
+        if (jwt.decode(req.token).role.permissions.includes(string)) {
+            next();
+        } else {
+            res.json({
+                message: "forbidden",
+                status: 403
+            })
+        };
+        console.log(jwt.decode(req.token).role.permissions);
+    };
 };
 
 //PART II
@@ -56,7 +71,7 @@ const createNewComment = (req, res, next) => {
         if (err) { res.send(err) };
     });
 };
-app.post("/articles/:id/comments", authentication, createNewComment);
+app.post("/articles/:id/comments", authentication, authorization('CREATE_COMMENTS'), createNewComment);
 
 //A.3. login (Level 2)
 const login = (req, res, next) => {
