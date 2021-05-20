@@ -19,25 +19,18 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { json } = require("express");
 
-// const articles = [{
-//         id: 1,
-//         title: 'How I learn coding?',
-//         description: 'Lorem, Quam, mollitia.',
-//         author: 'Jouza',
-//     },
-//     {
-//         id: 2,
-//         title: 'Coding Best Practices',
-//         description: 'Lorem, ipsum dolor sit, Quam, mollitia.',
-//         author: 'Besslan',
-//     },
-//     {
-//         id: 3,
-//         title: 'Debugging',
-//         description: 'Lorem, Quam, mollitia.',
-//         author: 'Jouza',
-//     },
-// ];
+//3. createNewComment [Level 2]
+//this middleware should check the authentication of users
+const authentication = async(req, res, next) => {
+    const TOKEN = await req.headers.authorization.split(" ")[1]
+        // console.log(req.headers.authorization);
+
+    jwt.verify(TOKEN, SECRET, (err, result) => {
+        if (err) { res.send(err) }
+        next();
+    });
+};
+
 //PART II
 //B.3. createNewComment
 const createNewComment = (req, res, next) => {
@@ -56,11 +49,11 @@ const createNewComment = (req, res, next) => {
             res.json(err);
         });
     // console.log(typeof(newComment._id))
-    Article.updateOne({ _id: articleId }, { comments: newComment._id }, (err, res) => {
+    Article.update({ _id: articleId }, { $push: { comments: newComment._id } }, (err, res) => {
         if (err) { res.send(err) };
     });
 };
-app.post("/articles/:id/comments", createNewComment);
+app.post("/articles/:id/comments", authentication, createNewComment);
 
 //A.3. login (Level 2)
 const login = (req, res, next) => {
