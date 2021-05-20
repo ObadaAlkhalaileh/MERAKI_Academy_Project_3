@@ -22,11 +22,14 @@ const { json } = require("express");
 //3. createNewComment [Level 2]
 //this middleware should check the authentication of users before going to other API's
 const authentication = async(req, res, next) => {
+    if (!req.headers.authorization) { res.json("please enter a token") };
     const TOKEN = await req.headers.authorization.split(" ")[1]
         // console.log(req.headers.authorization);
 
     jwt.verify(TOKEN, SECRET, (err, result) => {
-        if (err) { res.send(err) }
+        if (err) { res.send(err) };
+        req.token = TOKEN;
+        console.log(req.token)
         next();
     });
 };
@@ -82,7 +85,7 @@ const login = (req, res, next) => {
                             role: {
                                 role: "admin",
                                 permissions: ['MANAGE_USERS', 'CREATE_COMMENTS']
-                            };
+                            }
                         };
                         const options = { expiresIn: '60m' };
 
@@ -98,7 +101,7 @@ const login = (req, res, next) => {
                         });
                     };
                 });
-
+                //if email is not registered
             } else {
                 res.status(404);
                 res.json({
