@@ -13,6 +13,7 @@ const PORT = 5000;
 app.use(express.json());
 
 require("dotenv").config();
+const SECRET = process.env.SECRET;
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -38,7 +39,6 @@ const { json } = require("express");
 //     },
 // ];
 //PART II
-
 //B.3. createNewComment
 const createNewComment = (req, res, next) => {
     const articleId = req.params.id;
@@ -62,39 +62,49 @@ const createNewComment = (req, res, next) => {
 };
 app.post("/articles/:id/comments", createNewComment);
 
-//B.2. login (Level 1)
+//A.3. login (Level 2)
 const login = (req, res, next) => {
     const email = req.body.email.toLowerCase();
     const password = req.body.password;
 
     User.findOne({ email })
-        .then((result) => {
-            if (result) {
+        .then((result1) => {
+            if (result1) {
+                //check if there is a password entered
+                if (password === "") {
+                    res.status(404);
+                    res.json({
+                        message: "Please enter a password",
+                        status: 404
+                    });
+                };
                 //compare entered pass with hashed pass
-                bcrypt.compare(password, result.password, (err, result) => {
+                bcrypt.compare(password, result1.password, (err, result) => {
+                    //if password is entered and correct
                     if (result) {
                         // sign a jwt (give token)
+                        const payload = {
+                            userId: result._id,
+                            country: result.country
+                        };
+                        const options = { expiresIn: '60m' };
 
-                        res.status(200);
-                        // res.json("Success =>",{
-                        //     // token
-                        // });
+                        const TOKEN = { token: jwt.sign(payload, SECRET, options) };
+                        res.json(TOKEN);
                     };
-
-                    if (err) {
+                    //if password is incorrect
+                    if (!result) {
                         res.status(403);
-                        json.send("Error =>", {
+                        res.json({
                             message: "The password you’ve entered is incorrect",
                             status: 403
                         });
                     };
-                    console.log(result);
                 });
-
 
             } else {
                 res.status(404);
-                res.json("Error =>", {
+                res.json({
                     message: "The email doesn't exist",
                     status: 404
                 });
