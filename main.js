@@ -4,7 +4,7 @@ const express = require("express");
 //database requirement
 const db = require("./db");
 //model requirement
-const { User, Article, Comment } = require("./schema"); // User and Article can be changed to anything
+const { User, Article, Comment, Role } = require("./schema"); // User and Article can be changed to anything
 // console.log("Article=", Article);
 
 const app = express();
