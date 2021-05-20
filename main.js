@@ -20,7 +20,7 @@ const bcrypt = require("bcrypt");
 const { json } = require("express");
 
 //3. createNewComment [Level 2]
-//this middleware should check the authentication of users
+//this middleware should check the authentication of users before going to other API's
 const authentication = async(req, res, next) => {
     const TOKEN = await req.headers.authorization.split(" ")[1]
         // console.log(req.headers.authorization);
@@ -78,7 +78,11 @@ const login = (req, res, next) => {
                         // sign a jwt (give token)
                         const payload = {
                             userId: result._id,
-                            country: result.country
+                            country: result.country,
+                            role: {
+                                role: "admin",
+                                permissions: ['MANAGE_USERS', 'CREATE_COMMENTS']
+                            };
                         };
                         const options = { expiresIn: '60m' };
 
