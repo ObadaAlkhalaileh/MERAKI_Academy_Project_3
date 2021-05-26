@@ -1,0 +1,22 @@
+.app{
+    border: green solid 5px;
+}
+
+.header{
+    border: red solid 5px;
+    margin: 7px;
+}
+
+.register{
+    margin: 7px;
+    padding: 1px;
+    border: blue solid 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+input,button{
+    width: 30%;
+    height: 30px;
+}
