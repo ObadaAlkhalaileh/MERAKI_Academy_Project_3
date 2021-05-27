@@ -3,8 +3,11 @@
 }
 
 .header{
+    display: flex;
+    gap: 7px;
     border: red solid 5px;
     margin: 7px;
+    padding: 4px;
 }
 
 .register{
