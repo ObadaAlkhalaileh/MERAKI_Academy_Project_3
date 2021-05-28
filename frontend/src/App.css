@@ -1,25 +1,58 @@
-.app{
-    border: green solid 5px;
+.app {
+  border: green solid 5px;
 }
 
-.header{
+.header {
+  display: flex;
+  gap: 7px;
+  border: red solid 5px;
+  margin: 7px;
+  padding: 4px;
+}
+
+.register {
+  margin: 7px;
+  padding: 1px;
+  border: blue solid 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+input {
+  width: 440px;
+  height: 30px;
+}
+.registerButton {
+  color: white;
+  background-color: rgb(0, 102, 255);
+  border-radius: 3px;
+  width: 450px;
+  height: 40px;
+}
+
+.successMessage {
+    height: 60px;
+    width: 450px;
+    background-color: rgba(163, 207, 163, 0.692);
+    border-radius: 3px;
     display: flex;
-    gap: 7px;
-    border: red solid 5px;
-    margin: 7px;
-    padding: 4px;
-}
+    justify-content: center;
+    align-items: center;
+    color: green;
+  font-size: 18px;
+  margin-bottom: 10px;
 
-.register{
-    margin: 7px;
-    padding: 1px;
-    border: blue solid 5px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
 }
-
-input,button{
-    width: 30%;
-    height: 30px;
+.failMessage {
+  height: 60px;
+  width: 450px;
+  background-color: rgb(252, 165, 165);
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(136, 63, 63);
+  font-size: 18px;
+  margin-bottom: 10px;
 }
