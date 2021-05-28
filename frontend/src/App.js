@@ -18,7 +18,7 @@ export default function App() {
   <Route path="/login" render={()=><Login className="login" token={token} setToken={setToken}/>} />
   <Route path="/register" render={()=><Register className="register"/>} />
   <Route path="/dashboard" render={()=><Dashboard className="dashboard"/>} />
-  <Route path="/newArticle" render={()=><NewArticle/>} />
+  <Route path="/newArticle" render={()=><NewArticle className="newArticle" token={token}/>} />
   </div>
   {token?<Redirect to="/dashboard" />:null}
     </>

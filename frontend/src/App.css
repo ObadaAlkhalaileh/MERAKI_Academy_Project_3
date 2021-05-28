@@ -1,11 +1,6 @@
 .app {
   border: green solid 5px;
 }
-.dashboard{
-  border: blue solid 5px;
-  margin: 7px;
-
-}
 
 .header {
   display: flex;
@@ -23,7 +18,23 @@
   flex-direction: column;
   gap: 8px;
 }
-.login{
+
+.dashboard {
+  border: blue solid 5px;
+  padding: 1px;
+  margin: 7px;
+}
+
+.newArticle {
+  margin: 7px;
+  padding: 1px;
+  border: orange solid 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login {
   margin: 7px;
   padding: 1px;
   border: purple solid 5px;
@@ -36,7 +47,8 @@ input {
   width: 440px;
   height: 30px;
 }
-.registerButton,.loginButton {
+.registerButton,
+.loginButton {
   color: white;
   background-color: rgb(0, 102, 255);
   border-radius: 3px;
@@ -45,17 +57,16 @@ input {
 }
 
 .successMessage {
-    height: 60px;
-    width: 450px;
-    background-color: rgba(163, 207, 163, 0.692);
-    border-radius: 3px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: green;
+  height: 60px;
+  width: 450px;
+  background-color: rgba(163, 207, 163, 0.692);
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: green;
   font-size: 18px;
   margin-bottom: 10px;
-
 }
 .failMessage {
   height: 60px;
