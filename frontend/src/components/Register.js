@@ -55,10 +55,6 @@ const submit =()=>{
     {/* type of button is set to button instead of submit(default) */}
       <button className='registerButton' type='button' onClick={submit}>Register</button>
 
-      {/* {success===true?<SuccessReg className='successMessage' text='The user has been created successfuly'/>
-      :success===false?<SuccessReg className='failMessage' text='Error happened while register, Please try again'/>
-      :null} */}
-
     {success===true?<SuccessReg className='successMessage' text='The user has been created successfuly'/>
       :success==="E-mail required"?<SuccessReg className='failMessage' text={success}/>
       :success==="Password required"?<SuccessReg className='failMessage' text={success}/>
