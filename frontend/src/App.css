@@ -81,9 +81,19 @@ input {
   margin-bottom: 10px;
 }
 .articles{
-  display: grid;
-  grid-template-columns: 200px 200px;
+  display: flex;
+  flex-wrap: wrap;
+
 }
 .article{
-  border: orange solid;
+  border: rgba(155, 155, 155, 0.479) solid .5px;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 4px;
+  width: 46%;
+  min-height: 100px;
+  padding: 10px;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.article>p{
+  color: rgb(124, 124, 124);
 }

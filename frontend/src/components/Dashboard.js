@@ -31,10 +31,11 @@ const getAllArticles=()=>{
         <div className={className}>
       <p>Dashboard</p>
       <button type='button' className='loginButton' onClick={getAllArticles} style={{ width: '150px' }}>Get All Articles</button>
-    <div className='articles'>
+      <div className='articles'>
     {articles.map((elem,i)=>(<Article key={i} className="article" title={elem.title} description={elem.description}/>))}
     </div>
     </div>
+    
     )
 }
 
