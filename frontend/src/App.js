@@ -10,8 +10,8 @@ export default function App() {
   return (
     <div className='app'>
       <Navigation/>
-      <Route path="/login" render={()=><Login/>} />
-      <Route path="/Register" render={()=><Register/>} />
+      <Route path="/login" render={()=><Login className="login"/>} />
+      <Route path="/Register" render={()=><Register className="register"/>} />
     </div>
   );
 }

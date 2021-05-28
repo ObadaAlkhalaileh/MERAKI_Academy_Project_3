@@ -3,7 +3,7 @@ import SuccessReg from "./SuccessReg";
 
 const axios = require('axios').default;
 
-const Register = () => {
+const Register = ({className}) => {
 
 const [firstName,setFirstName]=useState()
 const [lastName,setLastName]=useState()
@@ -44,7 +44,7 @@ const submit =()=>{
 }
 
   return (
-    <form className="register">
+    <form className={className}>
       <label>Register:</label>
       <input type="text" placeholder="firstName here " onChange={(e) => {setFirstName(e.target.value);}}/>
       <input type="text" placeholder="lastName here " onChange={(e) => {setLastName(e.target.value);}}/>
