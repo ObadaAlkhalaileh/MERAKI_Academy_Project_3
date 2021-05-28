@@ -1,6 +1,11 @@
 .app {
   border: green solid 5px;
 }
+.dashboard{
+  border: blue solid 5px;
+  margin: 7px;
+
+}
 
 .header {
   display: flex;

@@ -8,7 +8,7 @@ const Login = ({className}) => {
     const [password,setPassword]=useState()
 
     const submit =()=>{
-        console.log('register buttin click');
+        console.log('register button click');
         axios({
             method: 'post',
             url: 'http://localhost:5000/login',
