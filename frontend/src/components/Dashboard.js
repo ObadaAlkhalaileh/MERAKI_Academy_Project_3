@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import { Route } from "react-router-dom";
 
 import Article from "./Article";
@@ -7,6 +7,10 @@ const axios = require('axios').default;
 
 const Dashboard = ({className}) => {
 const [articles,setArticles]=useState([])
+
+useEffect(() => {
+    getAllArticles();
+  }, []);
 
 const getAllArticles=()=>{
 
