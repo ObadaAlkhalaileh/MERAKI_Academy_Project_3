@@ -97,3 +97,13 @@ input {
 .article>p{
   color: rgb(124, 124, 124);
 }
+.article>span{
+  font-weight: normal;
+  font-size: 22px;
+}
+.moreDetails{
+  background-color: orange;
+  padding: 7px;
+  border-radius: 4px;
+  
+}
